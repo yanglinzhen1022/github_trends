@@ -2,7 +2,7 @@
 
 这是一个基于纯前端 SPA 架构开发的 GitHub 热门项目浏览器。它通过高效对接 GitHub Search API，实现动态收集、过滤、以及分类展示当前最新、最活跃的高星及高 Fork 热门项目，帮助开发者和研究人员快速捕捉各领域最新的技术风向（如 AI、Web 前端、后端系统、区块链等）。
 
-👉 **在线演示地址**：`https://<your-username>.github.io/github_trends/` *(部署完成后可在此填入您的真实地址)*
+👉 **在线演示地址**：[https://yanglinzhen1022.github.io/github_trends/](https://yanglinzhen1022.github.io/github_trends/)
 
 ---
 
