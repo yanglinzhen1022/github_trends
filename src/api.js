@@ -31,15 +31,15 @@ export function buildQueryUrl(category, timeRange, language, forceDate = null, s
   if (!category || typeof category !== 'string') {
     queryParts.push('stars:>5');
   } else if (category === 'ai') {
-    queryParts.push('(topic:ai OR topic:machine-learning OR topic:llm OR topic:deep-learning)');
+    queryParts.push('(ai OR "machine learning" OR llm OR "deep learning")');
   } else if (category === 'frontend') {
-    queryParts.push('(topic:frontend OR topic:react OR topic:vue OR topic:angular OR topic:css)');
+    queryParts.push('(frontend OR react OR vue OR angular OR svelte OR css)');
   } else if (category === 'backend') {
-    queryParts.push('(topic:backend OR topic:nodejs OR topic:golang OR topic:rust OR topic:python OR topic:java)');
+    queryParts.push('(backend OR nodejs OR golang OR rust OR python OR java)');
   } else if (category === 'devops') {
-    queryParts.push('(topic:devops OR topic:docker OR topic:kubernetes OR topic:ci-cd)');
+    queryParts.push('(devops OR docker OR kubernetes OR terraform OR "ci-cd")');
   } else if (category === 'mobile') {
-    queryParts.push('(topic:ios OR topic:android OR topic:flutter OR topic:react-native)');
+    queryParts.push('(mobile OR ios OR android OR flutter OR react-native OR swift OR kotlin)');
   } else if (category === 'general') {
     queryParts.push('stars:>5');
   } else {
@@ -52,7 +52,7 @@ export function buildQueryUrl(category, timeRange, language, forceDate = null, s
   }
 
   // Filter out forks by requiring date and stars/topic filters.
-  queryParts.push(`created:>${dateStr}`);
+  queryParts.push(`pushed:>${dateStr}`);
   queryParts.push('fork:false');
   queryParts.push('archived:false');
 
