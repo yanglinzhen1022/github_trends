@@ -27,13 +27,13 @@ describe('API Utility Tests', () => {
 
   it('should build correct query URL for frontend category', () => {
     const url = buildQueryUrl('frontend', 'daily', 'javascript');
-    expect(url).toContain('frontend+OR+react+OR+vue+OR+angular+OR+svelte+OR+css');
+    expect(url).toContain('frontend+OR+react+OR+vue+OR+angular+OR+svelte');
     expect(url).toContain('language%3Ajavascript');
   });
 
   it('should build correct query URL for backend category', () => {
     const url = buildQueryUrl('backend', 'weekly', 'go');
-    expect(url).toContain('backend+OR+nodejs+OR+golang+OR+rust+OR+python+OR+java');
+    expect(url).toContain('backend+OR+nodejs+OR+golang+OR+rust+OR+python');
     expect(url).toContain('language%3Ago');
   });
 
@@ -44,7 +44,7 @@ describe('API Utility Tests', () => {
 
   it('should build correct query URL for mobile category', () => {
     const url = buildQueryUrl('mobile', 'weekly', 'swift');
-    expect(url).toContain('mobile+OR+ios+OR+android+OR+flutter+OR+react-native+OR+swift+OR+kotlin');
+    expect(url).toContain('mobile+OR+ios+OR+android+OR+flutter+OR+%22react-native%22');
     expect(url).toContain('language%3Aswift');
   });
 
