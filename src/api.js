@@ -20,7 +20,7 @@ export function calculateDate(daysAgo, baseDate = new Date()) {
  * @param {string} [forceDate=null] - Overrides date calculation with a specific YYYY-MM-DD string.
  * @returns {string} The fully constructed GitHub Search API URL.
  */
-export function buildQueryUrl(category, timeRange, language, forceDate = null) {
+export function buildQueryUrl(category, timeRange, language, forceDate = null, sortBy = 'stars') {
   const daysMap = { daily: 1, weekly: 7, monthly: 30 };
   const daysAgo = daysMap[timeRange] || 7;
   const dateStr = forceDate || calculateDate(daysAgo);
@@ -57,7 +57,7 @@ export function buildQueryUrl(category, timeRange, language, forceDate = null) {
 
   const q = queryParts.join(' ');
   const encodedQ = encodeURIComponent(q).replace(/%20/g, '+');
-  return `https://api.github.com/search/repositories?q=${encodedQ}&sort=stars&order=desc&per_page=30`;
+  return `https://api.github.com/search/repositories?q=${encodedQ}&sort=${sortBy}&order=desc&per_page=30`;
 }
 
 /**

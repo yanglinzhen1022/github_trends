@@ -15,6 +15,11 @@ describe('API Utility Tests', () => {
     expect(url).toContain('sort=stars');
   });
 
+  it('should build correct query URL with forks sorting option', () => {
+    const url = buildQueryUrl('general', 'weekly', 'all', '2026-07-03', 'forks');
+    expect(url).toContain('sort=forks');
+  });
+
   it('should build correct query URL for AI category with python filter', () => {
     const url = buildQueryUrl('ai', 'monthly', 'python', '2026-06-10');
     expect(url).toContain('q=topic%3Aai+OR+topic%3Amachine-learning+OR+topic%3Allm+OR+topic%3Adeep-learning+language%3Apython+created%3A%3E2026-06-10');

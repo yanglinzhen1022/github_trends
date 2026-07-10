@@ -56,6 +56,14 @@
             <option value="cpp">C++</option>
           </select>
         </div>
+
+        <div class="filter-group">
+          <label for="sort-select">排序依据:</label>
+          <select id="sort-select">
+            <option value="stars" selected>按 Star 数排序</option>
+            <option value="forks">按 Fork 数排序</option>
+          </select>
+        </div>
       </div>
 
       <div class="grid-container" id="repos-grid">
@@ -79,6 +87,17 @@
       <div class="form-actions">
         <button class="btn" id="token-clear-btn" style="color: var(--danger);">清除</button>
         <button class="btn btn-primary" id="token-save-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- README 预览 Modal -->
+  <div class="modal" id="readme-modal">
+    <div class="modal-content" style="max-width: 800px; width: 90%;">
+      <button class="modal-close" id="readme-modal-close">×</button>
+      <h3 class="modal-title" id="readme-modal-title">README 预览</h3>
+      <div id="readme-modal-body" style="max-height: 500px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; font-size: 13px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-top: 15px; line-height: 1.5; color: var(--text-primary);">
+        正在加载...
       </div>
     </div>
   </div>

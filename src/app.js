@@ -9,6 +9,7 @@ const state = {
   currentCategory: 'general',
   timeRange: 'weekly',
   language: 'all',
+  sortBy: 'stars',
   showingFavorites: false
 };
 
@@ -78,6 +79,14 @@ function initEventListeners() {
     if (!state.showingFavorites) loadRepos();
   });
 
+  const sortSelect = document.getElementById('sort-select');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', (e) => {
+      state.sortBy = e.target.value;
+      if (!state.showingFavorites) loadRepos();
+    });
+  }
+
   // 我的收藏按钮切换
   document.getElementById('fav-toggle-view').addEventListener('click', (e) => {
     state.showingFavorites = !state.showingFavorites;
@@ -138,6 +147,20 @@ function initEventListeners() {
     if (!state.showingFavorites) loadRepos();
   });
 
+  // README Modal 关闭
+  const readmeModal = document.getElementById('readme-modal');
+  const readmeModalClose = document.getElementById('readme-modal-close');
+  if (readmeModal && readmeModalClose) {
+    readmeModalClose.addEventListener('click', () => {
+      readmeModal.classList.remove('active');
+    });
+    readmeModal.addEventListener('click', (e) => {
+      if (e.target === readmeModal) {
+        readmeModal.classList.remove('active');
+      }
+    });
+  }
+
   // 点击 Logo 返回主页
   document.getElementById('logo-btn').addEventListener('click', () => {
     state.showingFavorites = false;
@@ -171,7 +194,7 @@ function renderSkeletons() {
 async function loadRepos() {
   renderSkeletons();
   const token = getToken();
-  const url = buildQueryUrl(state.currentCategory, state.timeRange, state.language);
+  const url = buildQueryUrl(state.currentCategory, state.timeRange, state.language, null, state.sortBy);
 
   try {
     const repos = await fetchTrendingRepos(url, token);
@@ -219,7 +242,8 @@ function renderRepos(repos) {
     const lang = escapeHTML(repo.language || 'Markdown');
     const stars = repo.stargazers_count || 0;
     const forks = repo.forks_count || 0;
-    const htmlUrl = escapeHTML(repo.html_url);
+    const rawUrl = repo.html_url || '';
+    const htmlUrl = (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')) ? escapeHTML(rawUrl) : '#';
 
     card.innerHTML = `
       <button class="favorite-btn ${favClass}" data-id="${repo.id}">★</button>
@@ -234,6 +258,7 @@ function renderRepos(repos) {
           <div class="stat-item">🍴 ${forks}</div>
         </div>
       </div>
+      <button class="btn btn-readme" data-owner="${escapeHTML(repo.owner?.login || '')}" data-name="${escapeHTML(repo.name || '')}" style="margin-top: 12px; width: 100%; font-size: 13px; padding: 6px 12px;">📖 预览 README</button>
     `;
 
     // 收藏按钮点击逻辑
@@ -244,6 +269,47 @@ function renderRepos(repos) {
       button.classList.toggle('active');
       if (state.showingFavorites) {
         renderFavorites();
+      }
+    });
+
+    // README 按钮点击逻辑
+    card.querySelector('.btn-readme').addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const owner = repo.owner?.login || '';
+      const name = repo.name || '';
+      const readmeModal = document.getElementById('readme-modal');
+      const readmeBody = document.getElementById('readme-modal-body');
+      const readmeTitle = document.getElementById('readme-modal-title');
+      
+      if (readmeTitle) {
+        readmeTitle.textContent = `${escapeHTML(repo.name || '')} README 预览`;
+      }
+      if (readmeBody) {
+        readmeBody.textContent = '正在加载...';
+      }
+      if (readmeModal) {
+        readmeModal.classList.add('active');
+      }
+
+      try {
+        const token = getToken();
+        const headers = {};
+        if (token) {
+          headers['Authorization'] = `token ${token}`;
+        }
+        const response = await fetch(`https://api.github.com/repos/${owner}/${name}/readme`, { headers });
+        if (!response.ok) {
+          throw new Error('Fetch failed');
+        }
+        const data = await response.json();
+        const content = data.content || '';
+        if (readmeBody) {
+          readmeBody.textContent = decodeBase64Utf8(content);
+        }
+      } catch (err) {
+        if (readmeBody) {
+          readmeBody.textContent = '该仓库未提供 README 文件，或加载失败。';
+        }
       }
     });
 
@@ -275,5 +341,23 @@ export function escapeHTML(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+/**
+ * Robust base64 UTF-8 decoder.
+ * @param {string} str - Base64 encoded string.
+ * @returns {string} Decoded plain text or fallback error message.
+ */
+export function decodeBase64Utf8(str) {
+  try {
+    const binary = atob(str.replace(/\s/g, ''));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return new TextDecoder('utf-8').decode(bytes);
+  } catch (e) {
+    return '解析 README 失败。';
+  }
 }
 
