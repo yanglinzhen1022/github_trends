@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Hotspots Tracker - GitHub 热点趋势</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo" id="logo-btn">🚀 GitHub Hotspots</div>
+    <div>
+      <button class="btn" id="fav-toggle-view">⭐ 我的收藏</button>
+      <button class="btn btn-primary" id="token-btn">🔑 配置 Token</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="sidebar">
+      <h3>热门领域分类</h3>
+      <ul class="category-list" id="category-container">
+        <li class="category-item active" data-id="general">✨ 综合趋势</li>
+        <li class="category-item" data-id="ai">🤖 AI / 机器学习</li>
+        <li class="category-item" data-id="frontend">🌐 Web 前端</li>
+        <li class="category-item" data-id="backend">⚙️ 后端 / 系统</li>
+        <li class="category-item" data-id="devops">🛠️ 开发者工具</li>
+        <li class="category-item" data-id="mobile">📱 移动端开发</li>
+      </ul>
+      <div class="custom-category-box">
+        <h3>添加自定义 Topic</h3>
+        <input type="text" id="custom-input" placeholder="输入例如: webgpu, wasm">
+        <button class="btn" id="custom-add-btn" style="width: 100%;">添加</button>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="filters">
+        <div class="filter-group">
+          <label for="time-range">时间跨度:</label>
+          <select id="time-range">
+            <option value="daily">今日热门 (Daily)</option>
+            <option value="weekly" selected>本周热门 (Weekly)</option>
+            <option value="monthly">本月热门 (Monthly)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="lang-select">编程语言:</label>
+          <select id="lang-select">
+            <option value="all">全部 (All)</option>
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
+            <option value="go">Go</option>
+            <option value="rust">Rust</option>
+            <option value="cpp">C++</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-container" id="repos-grid">
+        <!-- 卡片/加载中骨架屏动态渲染区 -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Token 配置 Modal -->
+  <div class="modal" id="token-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="token-modal-close">×</button>
+      <h3 class="modal-title">配置 GitHub Token</h3>
+      <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 15px;">
+        设置您的 GitHub Personal Access Token 可以免去未登录限流限制。此 Token 仅保存在您本地的 localStorage 中。
+      </p>
+      <div class="form-group">
+        <label for="token-input">GitHub Token (PAT)</label>
+        <input type="password" id="token-input" placeholder="ghp_...">
+      </div>
+      <div class="form-actions">
+        <button class="btn" id="token-clear-btn" style="color: var(--danger);">清除</button>
+        <button class="btn btn-primary" id="token-save-btn">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>

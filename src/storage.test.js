@@ -64,4 +64,19 @@ describe('Storage Utility Tests', () => {
     addCustomCategory('webgpu');
     expect(getCustomCategories()).toContain('webgpu');
   });
+
+  it('should return empty array if favorites or custom categories are not arrays in localStorage', () => {
+    localStorage.setItem('favorite_repos', '"not an array"');
+    localStorage.setItem('custom_categories', '{"key": "value"}');
+    
+    expect(getFavorites()).toEqual([]);
+    expect(getCustomCategories()).toEqual([]);
+  });
+
+  it('should handle non-string custom category gracefully', () => {
+    addCustomCategory(12345);
+    addCustomCategory(null);
+    expect(getCustomCategories()).not.toContain('12345');
+    expect(getCustomCategories()).not.toContain('null');
+  });
 });

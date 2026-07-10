@@ -28,7 +28,9 @@ export function buildQueryUrl(category, timeRange, language, forceDate = null) {
   let queryParts = [];
 
   // Category mapping
-  if (category === 'ai') {
+  if (!category || typeof category !== 'string') {
+    queryParts.push('stars:>5');
+  } else if (category === 'ai') {
     queryParts.push('topic:ai OR topic:machine-learning OR topic:llm OR topic:deep-learning');
   } else if (category === 'frontend') {
     queryParts.push('topic:frontend OR topic:react OR topic:vue OR topic:angular OR topic:css');
@@ -45,7 +47,7 @@ export function buildQueryUrl(category, timeRange, language, forceDate = null) {
     queryParts.push(`topic:${category}`);
   }
 
-  if (language && language.toLowerCase() !== 'all') {
+  if (language && typeof language === 'string' && language.toLowerCase() !== 'all') {
     queryParts.push(`language:${language}`);
   }
 

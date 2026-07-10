@@ -12,7 +12,8 @@ export function getToken() {
 
 export function getFavorites() {
   try {
-    return JSON.parse(localStorage.getItem('favorite_repos') || '[]');
+    const list = JSON.parse(localStorage.getItem('favorite_repos') || '[]');
+    return Array.isArray(list) ? list : [];
   } catch {
     return [];
   }
@@ -35,13 +36,17 @@ export function toggleFavorite(repo) {
 
 export function getCustomCategories() {
   try {
-    return JSON.parse(localStorage.getItem('custom_categories') || '[]');
+    const list = JSON.parse(localStorage.getItem('custom_categories') || '[]');
+    return Array.isArray(list) ? list : [];
   } catch {
     return [];
   }
 }
 
 export function addCustomCategory(categoryName) {
+  if (typeof categoryName !== 'string') {
+    return;
+  }
   const list = getCustomCategories();
   const cleanName = categoryName.trim().toLowerCase();
   if (cleanName && !list.includes(cleanName)) {

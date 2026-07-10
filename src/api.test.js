@@ -47,6 +47,18 @@ describe('API Utility Tests', () => {
     const url = buildQueryUrl('database', 'weekly', 'all');
     expect(url).toContain('topic%3Adatabase');
   });
+
+  it('should handle undefined or non-string category gracefully', () => {
+    const urlNull = buildQueryUrl(null, 'weekly', 'all');
+    expect(urlNull).toContain('q=stars%3A%3E5');
+    const urlNum = buildQueryUrl(12345, 'weekly', 'all');
+    expect(urlNum).toContain('q=stars%3A%3E5');
+  });
+
+  it('should handle non-string language gracefully', () => {
+    const urlNumLang = buildQueryUrl('general', 'weekly', 12345);
+    expect(urlNumLang).not.toContain('language:');
+  });
 });
 
 describe('fetchTrendingRepos', () => {
