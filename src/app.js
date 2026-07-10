@@ -219,11 +219,12 @@ function renderRepos(repos) {
     const lang = escapeHTML(repo.language || 'Markdown');
     const stars = repo.stargazers_count || 0;
     const forks = repo.forks_count || 0;
+    const htmlUrl = escapeHTML(repo.html_url);
 
     card.innerHTML = `
       <button class="favorite-btn ${favClass}" data-id="${repo.id}">★</button>
       <div class="repo-title">
-        <a href="${repo.html_url}" target="_blank">${name}</a>
+        <a href="${htmlUrl}" target="_blank">${name}</a>
       </div>
       <div class="repo-desc" title="${desc}">${desc}</div>
       <div class="repo-meta">
@@ -254,7 +255,7 @@ function renderRepos(repos) {
 function renderError(message) {
   reposGrid.innerHTML = `
     <div class="error-message">
-      <p>⚠️ 请求异常: ${message}</p>
+      <p>⚠️ 请求异常: ${escapeHTML(message)}</p>
       <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">如果触发了 GitHub API 的速率限制，请点击顶部 "配置 Token" 按钮填入您的 GitHub Token 以恢复访问。</p>
       <button class="btn" id="retry-btn">重新尝试</button>
     </div>
