@@ -22,29 +22,29 @@ describe('API Utility Tests', () => {
 
   it('should build correct query URL for AI category with python filter', () => {
     const url = buildQueryUrl('ai', 'monthly', 'python', '2026-06-10');
-    expect(url).toContain('q=(ai+OR+%22machine+learning%22+OR+llm+OR+%22deep+learning%22)+language%3Apython+pushed%3A%3E2026-06-10+fork%3Afalse+archived%3Afalse');
+    expect(url).toContain('q=ai+OR+%22machine+learning%22+OR+llm+OR+%22deep+learning%22+language%3Apython+pushed%3A%3E2026-06-10+fork%3Afalse+archived%3Afalse');
   });
 
   it('should build correct query URL for frontend category', () => {
     const url = buildQueryUrl('frontend', 'daily', 'javascript');
-    expect(url).toContain('(frontend+OR+react+OR+vue+OR+angular+OR+svelte+OR+css)');
+    expect(url).toContain('frontend+OR+react+OR+vue+OR+angular+OR+svelte+OR+css');
     expect(url).toContain('language%3Ajavascript');
   });
 
   it('should build correct query URL for backend category', () => {
     const url = buildQueryUrl('backend', 'weekly', 'go');
-    expect(url).toContain('(backend+OR+nodejs+OR+golang+OR+rust+OR+python+OR+java)');
+    expect(url).toContain('backend+OR+nodejs+OR+golang+OR+rust+OR+python+OR+java');
     expect(url).toContain('language%3Ago');
   });
 
   it('should build correct query URL for devops category', () => {
     const url = buildQueryUrl('devops', 'monthly', 'all');
-    expect(url).toContain('(devops+OR+docker+OR+kubernetes+OR+terraform+OR+%22ci-cd%22)');
+    expect(url).toContain('devops+OR+docker+OR+kubernetes+OR+terraform+OR+%22ci-cd%22');
   });
 
   it('should build correct query URL for mobile category', () => {
     const url = buildQueryUrl('mobile', 'weekly', 'swift');
-    expect(url).toContain('(mobile+OR+ios+OR+android+OR+flutter+OR+react-native+OR+swift+OR+kotlin)');
+    expect(url).toContain('mobile+OR+ios+OR+android+OR+flutter+OR+react-native+OR+swift+OR+kotlin');
     expect(url).toContain('language%3Aswift');
   });
 

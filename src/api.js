@@ -31,15 +31,15 @@ export function buildQueryUrl(category, timeRange, language, forceDate = null, s
   if (!category || typeof category !== 'string') {
     queryParts.push('stars:>5');
   } else if (category === 'ai') {
-    queryParts.push('(ai OR "machine learning" OR llm OR "deep learning")');
+    queryParts.push('ai OR "machine learning" OR llm OR "deep learning"');
   } else if (category === 'frontend') {
-    queryParts.push('(frontend OR react OR vue OR angular OR svelte OR css)');
+    queryParts.push('frontend OR react OR vue OR angular OR svelte OR css');
   } else if (category === 'backend') {
-    queryParts.push('(backend OR nodejs OR golang OR rust OR python OR java)');
+    queryParts.push('backend OR nodejs OR golang OR rust OR python OR java');
   } else if (category === 'devops') {
-    queryParts.push('(devops OR docker OR kubernetes OR terraform OR "ci-cd")');
+    queryParts.push('devops OR docker OR kubernetes OR terraform OR "ci-cd"');
   } else if (category === 'mobile') {
-    queryParts.push('(mobile OR ios OR android OR flutter OR react-native OR swift OR kotlin)');
+    queryParts.push('mobile OR ios OR android OR flutter OR react-native OR swift OR kotlin');
   } else if (category === 'general') {
     queryParts.push('stars:>5');
   } else {
