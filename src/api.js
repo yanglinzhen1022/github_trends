@@ -40,6 +40,14 @@ export function buildQueryUrl(category, timeRange, language, forceDate = null, s
     queryParts.push('devops OR docker OR kubernetes OR terraform OR "ci-cd"');
   } else if (category === 'mobile') {
     queryParts.push('mobile OR ios OR android OR flutter OR "react-native"');
+  } else if (category === 'database') {
+    queryParts.push('database OR "data science" OR sql OR nosql OR postgres');
+  } else if (category === 'security') {
+    queryParts.push('security OR hacking OR pentest OR exploit OR malware');
+  } else if (category === 'game') {
+    queryParts.push('game OR unity OR unreal OR godot OR "game engine"');
+  } else if (category === 'blockchain') {
+    queryParts.push('blockchain OR ethereum OR bitcoin OR web3 OR solidity');
   } else if (category === 'general') {
     queryParts.push('stars:>5');
   } else {

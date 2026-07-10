@@ -48,9 +48,29 @@ describe('API Utility Tests', () => {
     expect(url).toContain('language%3Aswift');
   });
 
-  it('should build correct query URL for custom category', () => {
+  it('should build correct query URL for database category', () => {
     const url = buildQueryUrl('database', 'weekly', 'all');
-    expect(url).toContain('topic%3Adatabase');
+    expect(url).toContain('database+OR+%22data+science%22+OR+sql+OR+nosql+OR+postgres');
+  });
+
+  it('should build correct query URL for security category', () => {
+    const url = buildQueryUrl('security', 'weekly', 'all');
+    expect(url).toContain('security+OR+hacking+OR+pentest+OR+exploit+OR+malware');
+  });
+
+  it('should build correct query URL for game category', () => {
+    const url = buildQueryUrl('game', 'weekly', 'all');
+    expect(url).toContain('game+OR+unity+OR+unreal+OR+godot+OR+%22game+engine%22');
+  });
+
+  it('should build correct query URL for blockchain category', () => {
+    const url = buildQueryUrl('blockchain', 'weekly', 'all');
+    expect(url).toContain('blockchain+OR+ethereum+OR+bitcoin+OR+web3+OR+solidity');
+  });
+
+  it('should build correct query URL for custom category', () => {
+    const url = buildQueryUrl('redis', 'weekly', 'all');
+    expect(url).toContain('topic%3Aredis');
   });
 
   it('should handle undefined or non-string category gracefully', () => {
