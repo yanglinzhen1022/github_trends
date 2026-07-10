@@ -214,9 +214,9 @@ function renderRepos(repos) {
     const isFav = isFavorite(repo.id);
     const favClass = isFav ? 'active' : '';
 
-    const name = repo.full_name || repo.name;
-    const desc = repo.description || '暂无描述。';
-    const lang = repo.language || 'Markdown';
+    const name = escapeHTML(repo.full_name || repo.name);
+    const desc = escapeHTML(repo.description || '暂无描述。');
+    const lang = escapeHTML(repo.language || 'Markdown');
     const stars = repo.stargazers_count || 0;
     const forks = repo.forks_count || 0;
 
@@ -264,3 +264,15 @@ function renderError(message) {
     retryBtn.addEventListener('click', loadRepos);
   }
 }
+
+// HTML 转义辅助函数，防止 XSS 注入
+export function escapeHTML(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
