@@ -11,7 +11,7 @@ describe('API Utility Tests', () => {
 
   it('should build correct query URL for general category', () => {
     const url = buildQueryUrl('general', 'weekly', 'all', '2026-07-03');
-    expect(url).toContain('q=stars%3A%3E5+created%3A%3E2026-07-03');
+    expect(url).toContain('q=stars%3A%3E5+created%3A%3E2026-07-03+fork%3Afalse+archived%3Afalse');
     expect(url).toContain('sort=stars');
   });
 
@@ -22,29 +22,29 @@ describe('API Utility Tests', () => {
 
   it('should build correct query URL for AI category with python filter', () => {
     const url = buildQueryUrl('ai', 'monthly', 'python', '2026-06-10');
-    expect(url).toContain('q=topic%3Aai+OR+topic%3Amachine-learning+OR+topic%3Allm+OR+topic%3Adeep-learning+language%3Apython+created%3A%3E2026-06-10');
+    expect(url).toContain('q=(topic%3Aai+OR+topic%3Amachine-learning+OR+topic%3Allm+OR+topic%3Adeep-learning)+language%3Apython+created%3A%3E2026-06-10+fork%3Afalse+archived%3Afalse');
   });
 
   it('should build correct query URL for frontend category', () => {
     const url = buildQueryUrl('frontend', 'daily', 'javascript');
-    expect(url).toContain('topic%3Afrontend+OR+topic%3Areact+OR+topic%3Avue+OR+topic%3Aangular+OR+topic%3Acss');
+    expect(url).toContain('(topic%3Afrontend+OR+topic%3Areact+OR+topic%3Avue+OR+topic%3Aangular+OR+topic%3Acss)');
     expect(url).toContain('language%3Ajavascript');
   });
 
   it('should build correct query URL for backend category', () => {
     const url = buildQueryUrl('backend', 'weekly', 'go');
-    expect(url).toContain('topic%3Abackend+OR+topic%3Anodejs+OR+topic%3Agolang+OR+topic%3Arust+OR+topic%3Apython+OR+topic%3Ajava');
+    expect(url).toContain('(topic%3Abackend+OR+topic%3Anodejs+OR+topic%3Agolang+OR+topic%3Arust+OR+topic%3Apython+OR+topic%3Ajava)');
     expect(url).toContain('language%3Ago');
   });
 
   it('should build correct query URL for devops category', () => {
     const url = buildQueryUrl('devops', 'monthly', 'all');
-    expect(url).toContain('topic%3Adevops+OR+topic%3Adocker+OR+topic%3Akubernetes+OR+topic%3Aci-cd');
+    expect(url).toContain('(topic%3Adevops+OR+topic%3Adocker+OR+topic%3Akubernetes+OR+topic%3Aci-cd)');
   });
 
   it('should build correct query URL for mobile category', () => {
     const url = buildQueryUrl('mobile', 'weekly', 'swift');
-    expect(url).toContain('topic%3Aios+OR+topic%3Aandroid+OR+topic%3Aflutter+OR+topic%3Areact-native');
+    expect(url).toContain('(topic%3Aios+OR+topic%3Aandroid+OR+topic%3Aflutter+OR+topic%3Areact-native)');
     expect(url).toContain('language%3Aswift');
   });
 

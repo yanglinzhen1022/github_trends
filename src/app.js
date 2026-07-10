@@ -113,6 +113,25 @@ function initEventListeners() {
       addCustomCategory(val);
       initCategories();
       customInput.value = '';
+
+      // Auto-switch to the newly added custom category
+      const cleanVal = val.toLowerCase();
+      state.currentCategory = cleanVal;
+      state.showingFavorites = false;
+
+      // Reset favorites button styling
+      document.getElementById('fav-toggle-view').classList.remove('btn-primary');
+
+      // Update sidebar active class
+      categoryContainer.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+      setTimeout(() => {
+        const newItem = categoryContainer.querySelector(`[data-id="${cleanVal}"]`);
+        if (newItem) {
+          newItem.classList.add('active');
+        }
+      }, 0);
+
+      loadRepos();
     }
   };
 
