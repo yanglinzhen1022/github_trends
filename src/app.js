@@ -30,7 +30,8 @@ let requestController = null;
 
 // 增量模式的成本控制：候选上限 + 并发池 + 会话内缓存，
 // 避免一次刷新产生几十上百个 Stargazers 请求而瞬间耗尽配额。
-const GROWTH_CANDIDATE_LIMIT = 15;
+// 配置 Token 时最多统计 30 个，未配置 Token 时保留 15 个以节省配额。
+const GROWTH_CANDIDATE_LIMIT = 30;
 const GROWTH_CONCURRENCY = 4;
 const GROWTH_CACHE_KEY = 'growth_cache';
 
@@ -580,7 +581,8 @@ async function loadRepos() {
     if (isGrowthMode && repos.length > 0) {
       const daysMap = { daily: 1, weekly: 7, monthly: 30 };
       const sinceDate = calculateDate(daysMap[state.timeRange] || 7);
-      const candidates = repos.slice(0, GROWTH_CANDIDATE_LIMIT);
+      const limit = token ? GROWTH_CANDIDATE_LIMIT : 15;
+      const candidates = repos.slice(0, limit);
 
       // 未配置 Token 时先探测剩余配额（探测本身免费）。未登录额度仅 60 次/小时，
       // 一次增量统计需要数十次请求，配额不足时直接降级，避免“烧光配额后什么都不显示”。
